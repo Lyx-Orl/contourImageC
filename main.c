@@ -24,7 +24,7 @@ int is_opaque(unsigned char alpha){
 int main(int argc, char* argv[]){
     
     //Check arguments
-    if (argc != 7){
+    if (argc != 8){
         printf("Not enough or too many arguments");
         printf("Format: %s <input.png> <size_of_contour> <R> <G> <B> <A> <output.png>\n", argv[0]);
         return 1;
@@ -122,6 +122,11 @@ int main(int argc, char* argv[]){
                 new_image[current_index + 1] = contour_color.g;
                 new_image[current_index + 2] = contour_color.b;
                 new_image[current_index + 3] = contour_color.a;
+            }else{
+                new_image[current_index]     = 0;
+                new_image[current_index + 1] = 0;
+                new_image[current_index + 2] = 0;
+                new_image[current_index + 3] = 0;
             }
         }
     }
