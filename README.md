@@ -10,7 +10,7 @@ gcc -o contourImage main.c -lm
 ```
 contourImage input.png 15 255 0 0 255 output.png
 ```
-- input.png : image entry
+- input.png : image entry png file
 - 15 : 15 pixel around image
 - 255 0 0 255 : color around the image
-- output.png : output image
+- output.png : output image png file
