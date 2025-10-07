@@ -18,7 +18,7 @@ float distance_between_two_point(int x1, int y1, int x2, int y2){
 }
 
 int is_opaque(unsigned char alpha){
-    return alpha >= 50;
+    return alpha >= 175;
 }
 
 int main(int argc, char* argv[]){
@@ -62,7 +62,8 @@ int main(int argc, char* argv[]){
     //variables for new image
     int new_width = width + 2 * distance;
     int new_height = height + 2 * distance;
-    unsigned char* new_image = (unsigned char*)malloc((new_width * new_height * 4)*sizeof(unsigned char));
+    unsigned char* new_image = (unsigned char*)calloc(new_width * new_height * 4, sizeof(unsigned char));
+    unsigned char* exemple_image = (unsigned char*)calloc(new_width * new_height * 4, sizeof(unsigned char)); //image to know pixel
     if (!new_image) {
         printf("Memory error\n");
         stbi_image_free(original_data);
@@ -80,6 +81,11 @@ int main(int argc, char* argv[]){
             new_image[new_index + 1] = original_data[orig_index + 1]; // G
             new_image[new_index + 2] = original_data[orig_index + 2]; // B
             new_image[new_index + 3] = original_data[orig_index + 3]; // A
+
+            exemple_image[new_index]     = original_data[orig_index];     // R
+            exemple_image[new_index + 1] = original_data[orig_index + 1]; // G
+            exemple_image[new_index + 2] = original_data[orig_index + 2]; // B
+            exemple_image[new_index + 3] = original_data[orig_index + 3]; // A
             
         }
     }
@@ -90,7 +96,7 @@ int main(int argc, char* argv[]){
 
             int current_index = (y * new_width + x) * 4;
             // not transparent -> continue
-            if (is_opaque(new_image[current_index + 3])) {
+            if (is_opaque(exemple_image[current_index + 3])) {
                 continue;
             }
 
@@ -107,7 +113,7 @@ int main(int argc, char* argv[]){
                     if (nx >= 0 && nx < new_width && ny >= 0 && ny < new_height) {
                         int index_pixel = (ny*new_width + nx) * 4;
 
-                        if (is_opaque(new_image[index_pixel + 3])) {
+                        if (is_opaque(exemple_image[index_pixel + 3])) {
                             float dist = distance_between_two_point(x, y, nx, ny);
                             if (dist < distance) {
                                 coloration = 1;
@@ -117,16 +123,11 @@ int main(int argc, char* argv[]){
                 }
             }
 
-            if (coloration == 0){
+            if (coloration == 1){
                 new_image[current_index]     = contour_color.r;
                 new_image[current_index + 1] = contour_color.g;
                 new_image[current_index + 2] = contour_color.b;
                 new_image[current_index + 3] = contour_color.a;
-            }else{
-                new_image[current_index]     = 0;
-                new_image[current_index + 1] = 0;
-                new_image[current_index + 2] = 0;
-                new_image[current_index + 3] = 0;
             }
         }
     }
@@ -139,6 +140,7 @@ int main(int argc, char* argv[]){
 
     stbi_image_free(original_data);
     free(new_image);
+    free(exemple_image);
 
     return 0;
 
