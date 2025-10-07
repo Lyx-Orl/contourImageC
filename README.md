@@ -1,5 +1,5 @@
 # contourImageC
-Generate the contour of an image in C with a specific color
+Generate the contour of an image in C with a specific color\
 usage of stb for manipulate image : [https://github.com/nothings/stb](https://github.com/nothings/stb)
 # compile line
 ```
