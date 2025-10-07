@@ -117,7 +117,7 @@ int main(int argc, char* argv[]){
                 }
             }
 
-            if (coloration == 1){
+            if (coloration == 0){
                 new_image[current_index]     = contour_color.r;
                 new_image[current_index + 1] = contour_color.g;
                 new_image[current_index + 2] = contour_color.b;
